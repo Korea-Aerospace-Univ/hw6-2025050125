@@ -1,44 +1,35 @@
 #include <stdio.h>
 
 int main() {
-    int N;
-    스타일 배열 초기화 
-    int arr1[20] = {}; 
-    int arr2[20] = {};
-
-    // 정수 N 입력 (1 <= N <= 20)
-    scanf("%d", &N);
-
-    // 첫 번째 배열 입력
-    for (int i = 0; i < N; i++) {
-        scanf("%d", &arr1[i]);
-    }
-
-    // 두 번째 배열 입력
-    for (int i = 0; i < N; i++) {
-        scanf("%d", &arr2[i]);
-    }
-
-    // nullptr 초기화 및 포인터 연결 
-    int *p = nullptr;
-    int *q = nullptr;
-
-    p = arr1;            // 첫 번째 배열의 시작 주소 (arr1[0]의 주소) [cite: 742]
-    q = arr2 + (N - 1);  // 두 번째 배열의 마지막 원소 주소 
-
-    // N번 반복하며 역방향 원소 합산 출력
-    for (int i = 0; i < N; i++) {
-        // 참조 연산자(*)로 값을 가져와 덧셈 [cite: 746]
-        int sum = *p + *q;
+    char arr[11]; // 10개의 문자와 널 문자('\0')를 고려한 배열 선언
+    
+    // 1. 10개의 영문자 입력받기 (문자열 형식 %s로 안전하게 입력)
+    scanf("%s", arr);
+    
+    char max_char = arr[0]; // 가장 많이 나타난 문자를 저장할 변수 (초기값은 첫 번째 문자)
+    int max_count = 0;      // 최대 빈도수를 저장할 변수
+    
+    // 힌트에 제공된 포인터 기반 중첩 반복문 구조 사용
+    // 외부 포인터 p: 기준이 되는 문자를 가리킴
+    for (char *p = arr; p < arr + 10; p++) {
+        int current_count = 0; // 현재 가리키고 있는 문자(*p)의 빈도수 카운트
         
-        // 과제 필수 주의사항: 공백이 먼저 출력되는 형태 (" %d") 
-        printf(" %d", sum); 
+        // 내부 포인터 q: 배열 전체를 돌며 *p와 같은 문자가 있는지 확인
+        for (char *q = arr; q < arr + 10; q++) {
+            if (*p == *q) {
+                current_count++;
+            }
+        }
         
-        // 포인터 주소 증감 연산으로 다음 위치 이동 [cite: 774, 1028]
-        p++; // 첫 번째 배열은 정방향으로 주소 증가 [cite: 965]
-        q--; // 두 번째 배열은 역방향으로 주소 감소
+        //'>' 조건을 사용하여 빈도수가 같을 때는 먼저 나타난 문자(*p)가 유지되도록 함
+        if (current_count > max_count) {
+            max_count = current_count;
+            max_char = *p;
+        }
     }
-    printf("\n");
-
+    
+    // 3. 결과 출력
+    printf("%c %d\n", max_char, max_count);
+    
     return 0;
 }
