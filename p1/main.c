@@ -1,14 +1,13 @@
 #include <stdio.h>
 
 int main() {
-   
     char arr[100] = {}; 
     int N = 10; 
 
     char *p = NULL; 
-    
+
     for (p = arr; p < arr + N; p++) {
-        scanf(" %c", p);
+        scanf(" %c", p); 
     }
 
     char max_char = *arr; 
@@ -16,7 +15,6 @@ int main() {
 
     for (p = arr; p < arr + N; p++) {
         int current_count = 0;
-        
         
         for (char *q = arr; q < arr + N; q++) {
             if (*p == *q) {
